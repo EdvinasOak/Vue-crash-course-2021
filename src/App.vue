@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <Header title="Task Tracker" />
-    <Tasks :tasks="tasks" />
+    <Tasks
+      @toggle-reminder="toggleReminder"
+      @delete-task="deleteTask"
+      :tasks="tasks"
+    />
   </div>
 </template>
 
@@ -17,7 +21,28 @@ import Tasks from './components/Tasks.vue'
   },
   data() {
     return {
-      task: []
+      tasks: []
+    }
+  },
+  methods: {
+    deleteTask(id: number) {
+      if (confirm('Are you sure ?')) {
+        this.tasks = this.tasks.filter(
+          (task: {
+            id: number
+            text: string
+            day: string
+            reminder: boolean
+          }) => task.id !== id
+        )
+      }
+    },
+
+    toggleReminder(id: number) {
+      this.tasks = this.tasks.map(
+        (task: { id: number; text: string; day: string; reminder: boolean }) =>
+          task.id === id ? { ...task, reminder: !task.reminder } : task
+      )
     }
   },
   created() {
@@ -29,10 +54,16 @@ import Tasks from './components/Tasks.vue'
         reminder: true
       },
       {
-        id: 1,
+        id: 2,
         text: 'D Appointment2',
-        day: 'March 2nd at 2:0pm',
+        day: 'March 2nd at 2:00pm',
         reminder: true
+      },
+      {
+        id: 3,
+        text: 'D Appointment3',
+        day: 'March 2nd at 2:20pm',
+        reminder: false
       }
     ]
   }
