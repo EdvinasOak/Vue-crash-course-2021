@@ -22,10 +22,7 @@
       ]
     },
     "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
+      "es5", "es6", "dom", "dom.iterable"
     ]
   },
   "include": [
